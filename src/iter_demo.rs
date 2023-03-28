@@ -6,6 +6,6 @@ pub fn main () {
 
   }
   for i in list {
-    
+
   }
 }
