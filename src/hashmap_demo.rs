@@ -10,10 +10,8 @@ pub fn main () {
 
   hash_map.entry("gender").and_modify(|s| { *s = "male".to_string(); });
   hash_map.entry("name").and_modify(|s| {
-    *s = s.to_owned() + "__Tail";
+    *s = s.to_owned() + "__tail";
   });
-
-  
 
   println!("{:?} {:?}", hash_map, hash_map.get("name"));
 }
