@@ -11,7 +11,8 @@ use std::rc;
 // mod closure_demo;
 // mod iter_demo;
 // mod box_demo;
-mod rc_demo;
+// mod rc_demo;
+mod arc_demo;
 
 fn main() { 
     // struct_demo::test();
@@ -20,5 +21,6 @@ fn main() {
     // closure_demo::main();
     // iter_demo::main();
     // box_demo::main();
-    rc_demo::main();
+    // rc_demo::main();
+    arc_demo::main();
 }
