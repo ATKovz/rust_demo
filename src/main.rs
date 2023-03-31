@@ -12,7 +12,8 @@ use std::rc;
 // mod iter_demo;
 // mod box_demo;
 // mod rc_demo;
-mod arc_demo;
+// mod arc_demo;
+mod mutex_demo;
 
 fn main() { 
     // struct_demo::test();
@@ -22,5 +23,6 @@ fn main() {
     // iter_demo::main();
     // box_demo::main();
     // rc_demo::main();
-    arc_demo::main();
+    // arc_demo::main();
+    mutex_demo::main();
 }
