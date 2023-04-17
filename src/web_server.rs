@@ -26,6 +26,11 @@ fn read_file (file_path: &str, mut target: Vec<u8>) -> Vec<u8> {
   target
 }
 
+fn gen_head (code: u32, body: &str) -> String {
+  let result = format!("HTTP/1.1 {} OK\r\n\r\n{}", code, body);
+  result
+}
+
 fn handle_connection (mut s: TcpStream) {
   let r = BufReader::new(&mut s);
   // buffer to string iter
@@ -35,8 +40,6 @@ fn handle_connection (mut s: TcpStream) {
     .take_while(|x| !x.is_empty())
     .collect();
 
-  let mut head = "HTTP/1.1 200 OK\r\n\r\n";
-
   let req_head = &result[0];
   let split_str: Vec<&str> = req_head.split(' ').map(|e| e).collect();
 
@@ -45,19 +48,14 @@ fn handle_connection (mut s: TcpStream) {
     let target: Vec<u8> = vec![];
     
     let file_str = String::from_utf8(read_file(path, target)).unwrap();
-    let result_bytes = file_str.as_str().as_bytes();
-    // let head_bytes = head.to_ascii_uppercase().as_bytes();
-    let head_bytes = head.as_bytes();
-    let j  = [head_bytes, result_bytes].concat();
-    s.write_all(&j);
-    println!("{:?}", &j);
-    println!("{:?}", String::from_utf8(j));
+
+    let response_body = gen_head(200, &file_str);
+    
+    s.write_all(&response_body.as_bytes());
   } else {
 
-    let content = "unknown file".as_bytes();
-    let reture_item = [head.as_bytes(), content].concat();
-    s.write_all(&reture_item);
-    println!("{:?}", String::from_utf8(reture_item));
+    let response_body = gen_head(404, "unknown file!");
+    s.write_all(&response_body.as_bytes());
   }
 
   // s.write_all(response.as_bytes());
@@ -70,5 +68,4 @@ pub fn main () {
     let mut stream = stream.unwrap();
     handle_connection(stream);
   }
-
 }
